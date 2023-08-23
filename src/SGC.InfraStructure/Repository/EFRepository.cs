@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGC.InfraStructure.Repository
+namespace SGC.InfraStructure.EFRepository
 {
     public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
@@ -18,14 +18,14 @@ namespace SGC.InfraStructure.Repository
         {
             this._dbContext = dbContext;
         }
-        public TEntity Adicionar(TEntity entity)
+        public virtual TEntity Adicionar(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();
             return entity;
         }
 
-        public void Atualizar(TEntity entity)
+        public virtual void Atualizar(TEntity entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             _dbContext.SaveChanges();
@@ -36,7 +36,7 @@ namespace SGC.InfraStructure.Repository
             return _dbContext.Set<TEntity>().Where(predicado).AsEnumerable();
         }
 
-        public TEntity ObterPorId(int id)
+        public virtual TEntity ObterPorId(int id)
         {
             return _dbContext.Set<TEntity>().Find(id);
         }
